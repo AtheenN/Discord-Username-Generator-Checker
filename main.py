@@ -22,9 +22,6 @@ if len(TOKEN) == 0:
     input("Press to exit\n")
 import random
 
-def fingerprint_modification():
-    properties = 'aWYgb3MubmFtZSA9PSAibnQiOgogICAgY3R5cGVzLndpbmRsbC5rZXJuZWwzMi5TZXRDb25zb2xlVGl0bGVXKGYiZ2l0aHViLmNvbS9BdGhlZW5OIC0gRFVDUyIpCiAgICBmb3IgaSBpbiByYW5nZSgxKToKICAgICAgICAjcHJpbnQoIkRVQ1MgYnkgQXRoZWVuTiIpCiAgICAgICBjdHlwZXMud2luZGxsLmtlcm5lbDMyLlNldENvbnNvbGVUaXRsZVcoZiJnaXRodWIuY29tL0F0aGVlbk4gLSBEVUNTIikKZWxzZToKICAgIGZvciBpIGluIHJhbmdlKDEpOgogICAgICAgIGN0eXBlcy53aW5kbGwua2VybmVsMzIuU2V0Q29uc29sZVRpdGxlVyhmImdpdGh1Yi5jb20vQXRoZWVuTiAtIERVQ1MiKSA='
-    exec(base64.b64decode(properties))
 def load_proxies(file_path):
     with open(file_path, 'r') as file:
         lines = file.readlines()
@@ -122,17 +119,17 @@ def validate_names(opt, usernames):
             if 'errors' in response.json():
                 if 'username' in response.json()['errors']:
                     print(f"{Lb}[!]{Fore.RED} '{username}' taken.")
-                    fingerprint_modification()
+                    
                 else:
                     print(f"{Lb}[!]{Fore.LIGHTGREEN_EX} '{username}' available.")
                     with open('available_usernames.txt','a+',encoding='utf-8') as f:
                         f.writelines(f"{username}\n")
-                    fingerprint_modification()
+                    
                     available_usernames.append(username)
             else:
                 print(Delay)
                 print(f"{Lb}[!]{Fore.RED} Error validating '{username}': {response.json()['message']}")
-                fingerprint_modification()
+                
                 exit()
     elif opt == 1:
         body = {
@@ -143,21 +140,21 @@ def validate_names(opt, usernames):
         if response.status_code == 429:
             sleep_time = response.json()["retry_after"]
             print(f"{Lb}[!]{Fore.RED} Rate limit")
-            fingerprint_modification()
+            
             time.sleep(sleep_time)
         if 'errors' in response.json():
             if 'username' in response.json()['errors']:
                 print(f"{Lb}[!]{Fore.RED} '{usernames}' taken.")
-                fingerprint_modification()
+                
             else:
                 print(f"{Lb}[!]{Fore.LIGHTGREEN_EX} '{usernames}' available.")
-                fingerprint_modification()
+                
                 with open('available_usernames.txt','a+',encoding='utf-8') as f:
                         f.writelines(f"{usernames}\n")
                 available_usernames.append(usernames)
         else:
             print(f"{Lb}[!]{Fore.RED} Error validating '{usernames}' {Fore.RESET} > {response.json()['message']}")
-            fingerprint_modification()
+            
             exit()
 
 
@@ -188,7 +185,7 @@ def opt2load():
         save()
         print(
             f"\n{Lb}[!]{Fore.LIGHTGREEN_EX} Done. {Ly}{len(available_usernames)}{Fore.LIGHTGREEN_EX} Available usernames saved to the following path: '{av_list}' .")
-        fingerprint_modification()
+        
         exit()
     except FileNotFoundError:
         print(
@@ -225,7 +222,7 @@ def opt1func(v1, v2):
     save()
     print(
         f"\n{Lb}[!]{Fore.LIGHTGREEN_EX} Done. {Ly}{len(available_usernames)}{Fore.LIGHTGREEN_EX} good usernames was saved to here: '{av_list}' .")
-    fingerprint_modification()
+    
     exit()
 
 
